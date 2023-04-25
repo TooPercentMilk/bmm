@@ -41,7 +41,7 @@ def predict(rec, user, n=5):
     return best_list[:n]
 
 def main():
-    print("Welcome to Recommender Alpha 1.0!")
+    print("Welcome to Recommender Alpha 1.1!")
 
     data = load_data()
 
@@ -50,7 +50,7 @@ def main():
     rec = SVD(n_factors=147) 
     rec = train_model(rec, trainset)
 
-    print(predict(rec, "Dalton"))
+    print(predict(rec, "Ryan"))
 
     #print(accuracy_test(rec, testset))
     return 0
