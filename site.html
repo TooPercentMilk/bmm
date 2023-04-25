@@ -16,6 +16,29 @@
             <div class="text">
                 Hi, what's your name?
             </div>
+            <div>
+                    <input list="names" name="myName" /></label>
+                    <datalist id="names">
+                    </datalist>
+            </div>
+            <div id="beerbox">
+                <div id="rate" class="big">Rate a beer!</div>
+                <div class="text" style="padding-right: 65px;">
+                    Beer:
+                    <input list="beers" name="myBeer" style="height: 18px;" id="beers"/></label>
+                    <datalist id="beers">
+                    </datalist>
+                </div>
+                <div class="text" style="padding-right: 157px;">
+                    Rating (1-10):
+                    <input list="ratings" name="myRating" style="height: 18px;" id="ratings"/></label>
+                    <datalist id="ratings">
+                    </datalist>
+                </div>  
+                <button type="button" id="enter">
+                    Enter
+                </button>
+            </div>
         </div>
     </body>
 
