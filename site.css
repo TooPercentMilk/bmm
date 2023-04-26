@@ -73,6 +73,12 @@
      margin-left: 2px;
   }
 
+  #rate_state {
+    margin-top: 15px;
+    font-size: 40px;
+    color: #423474;
+  }
+
 .big {
     font-size: 50px;
 }
@@ -82,9 +88,9 @@
     font-size: 30px;
     justify-content: center;
 }
-
+  
 #beerbox {
-    margin-top: 50px;
+    margin-top: 25px;
     display: flex;
     border: #423474 2px solid;
     box-shadow: #423474 5px 10px;
@@ -106,4 +112,9 @@
     width: 122px;
     object-fit: cover;
 
+}
+
+.rating_text {
+    font-family: Mukta;
+    padding: 50;
 }

@@ -13,31 +13,44 @@
             <div class="beerpic"><img src="pictures/beer.png" class="beerpic"></div>
         </div>
         <div id="main">
-            <div class="text">
-                Hi, what's your name?
+            <div class="text" id="name_prompt">
+                <span>Hi, what's your name?</span>
             </div>
+            <!-- <div class="text" id="change_prompt"></div> -->
             <div>
-                    <input list="names" name="myName" /></label>
-                    <datalist id="names">
-                    </datalist>
+                <input list="names" name="myName" id="name_field"/></label>
+                <datalist id="names">
+                </datalist>
             </div>
             <div id="beerbox">
                 <div id="rate" class="big">Rate a beer!</div>
                 <div class="text" style="padding-right: 65px;">
                     Beer:
-                    <input list="beers" name="myBeer" style="height: 18px;" id="beers"/></label>
-                    <datalist id="beers">
+                    <input list="beer" name="myBeer" style="height: 18px;" id="beers"/></label>
+                    <datalist id="beer">
                     </datalist>
                 </div>
                 <div class="text" style="padding-right: 157px;">
                     Rating (1-10):
-                    <input list="ratings" name="myRating" style="height: 18px;" id="ratings"/></label>
-                    <datalist id="ratings">
+                    <input list="rating" name="myRating" style="height: 18px;" id="ratings"/></label>
+                    <datalist id="rating" class="rating_text">
+                        <option value="1" class="rating_text">
+                        <option value="2" class="rating_text">
+                        <option value="3" class="rating_text">
+                        <option value="4" class="rating_text">
+                        <option value="5" class="rating_text">
+                        <option value="6" class="rating_text">
+                        <option value="7" class="rating_text">
+                        <option value="8" class="rating_text">
+                        <option value="9" class="rating_text">
+                        <option value="10"class="rating_text">
                     </datalist>
                 </div>  
                 <button type="button" id="enter">
                     Enter
                 </button>
+            </div>
+            <div id="rate_state">
             </div>
         </div>
     </body>
