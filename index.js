@@ -1,4 +1,7 @@
+
+var show_stats = true;
 var current_name = "";
+
 var beer_list = ["Coors Lite",
     "Coors Banquet",
     "Miller Lite", 
@@ -159,24 +162,61 @@ var beer_list = ["Coors Lite",
     "Kcco Black Lager", 
     "Okanagan Spring Brewmasters Black Lager", 
     ];
-var value_list = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
+var value_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+var beer_list_2 = ['Aa', 'Ba', 'Ca', 'Da', 'Ea', 'Fa', 'Ga', 'Ha', 'Ia', 'Ja', 'Ka', 'La', 'Ma', 'Na', 'Oa', 
+                    'Pa', 'Qa', 'Ra', 'Sa', 'Ta', 'Ua', 'Va', 'Wa', 'Xa', 'Ya', 'Za', 'Ab', 'Bb', 'Cb', 'Db', 'Eb', 'Fb', 'Gb', 'Hb', 'Ib', 'Jb', 'Kb'];
+
+var stats = [];
+
+function makeStats(stats) {
+    var result = "<table border=1>";
+
+    result += "<tr><td style=\'width: 26px;\'>\ </td>";
+    for (var i = 0; i < beer_list_2.length; i++) {
+        result += "<td style=\'width: 26px; font-weight: bolder;\'>" + beer_list_2[i] + "</td>";
+    }
+    result += "</tr>";
+
+    for (var i = 0; i < stats.length; i++) {
+        result += "<tr>";
+        for(var j=0; j<stats[i].length; j++){
+            if (stats[i][j] != 0) {
+                result += "<td style=\'width: 26px;\'>"+stats[i][j]+"</td>";
+            }
+            else {
+                result += "<td style=\'width: 26px;\'>"+" "+"</td>";
+            }
+        }
+        result += "</tr>";
+    }
+    result += "</table>";
+
+    return result;
+}
+
 
 function check_fields() {
     if (document.getElementById("ratings").value == "" || current_name == "" || document.getElementById("beers").value == "") {
         return true;
     }
-    if (!beer_list.includes(document.getElementById("beers").value)) {
+    if (!beer_list_2.includes(document.getElementById("beers").value)) {
         return true;
     }
-    if (!value_list.includes(document.getElementById("ratings").value)) {
+    if (!value_list.includes(parseInt(document.getElementById("ratings").value))) {
         return true;
     }
 
     return false;
 }
 
-function add_beer(data) {
-    beer_list.push(data.split(",")[1]);
+function add_beer(rating) {
+    stats.forEach(function(e) {
+        if (e[0] == current_name) {
+            index = beer_list_2.indexOf(document.getElementById("beers").value);
+            e[index + 1] = rating;
+        }
+    });
 }
 
 //broken
@@ -207,14 +247,61 @@ function read_beers() {
 function populate_list() {
     var list = document.getElementById("beer")
 
-    beer_list.forEach(function(entry){
+    beer_list_2.forEach(function(entry){
         var option = document.createElement('option');
         option.value = entry;
         list.appendChild(option);
      });
 }
 
+function show_average() {
+    var averages = [];
+    var sum = 0;
+    var count = 0;
 
+    for (var i = 1; i < stats[0].length; ++i) {
+        count = 0;
+        sum = 0;
+
+        for (var j = 0; j < stats.length; ++j) {
+            if (stats[j][i] != 0) {
+                count++;
+                sum += stats[j][i];
+            }
+        }
+        //catch divide by zero
+        if (sum == 0) {
+            averages.push([beer_list_2[i - 1], 0]);
+        }
+        else {
+            averages.push([beer_list_2[i - 1], (sum / count)]);
+        }
+    }
+    averages.sort(functor);
+
+    var table = "<table border=1>";
+
+    table += "<tr>";
+    for (var i = 0; i < beer_list_2.length; i++) {
+        table += "<td style=\'width: 26px; font-weight: bolder;\'>" + averages[i][0] + "</td>";
+    }
+    table += "</tr>";
+    for (var i = 0; i < beer_list_2.length; i++) {
+        table += "<td style=\'width: 26px;\'>" + averages[i][1].toFixed(1) + "</td>";
+    }
+    table += "</tr>";
+    table += "</table>";
+
+    return table;
+}
+
+function functor(a, b) {
+    return (b[1] - a[1]);
+}
+
+//
+//MAIN
+//
 $(document).ready( function() {
     console.log("Ready!");
 
@@ -225,6 +312,12 @@ $(document).ready( function() {
     document.getElementById('name_field').addEventListener('keydown', function(e) {
         if (e.code == 'Enter') {
             current_name = document.getElementById("name_field").value;
+            let user = [current_name, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            var main =  document.getElementById("main");
+            var higher = main.offsetHeight + 31 + 'px';
+            main.style.height = higher;
+            stats.push(user);
+
             document.getElementById("name_field").value = "";
             document.getElementById("name_prompt").innerHTML = "<span>Logged in as <b>" + current_name + "</b></span><br><span>Change name?</span>";
             document.getElementById("name_prompt").style.display = 'block';
@@ -238,13 +331,21 @@ $(document).ready( function() {
         else {
             document.getElementById("rate_state").innerHTML = current_name + " rated " + document.getElementById("beers").value + 
                                                         " a " + document.getElementById("ratings").value;
-            $("#rate_state").css("display", "initial");
+            $("#rate_state").css("opacity", "100");
             setTimeout(function () {
-                $("#rate_state").fadeOut(1500);} , 800);
+                $("#rate_state").fadeTo(1500, 0);} , 800);
+
+            add_beer(parseInt(document.getElementById("ratings").value));
 
             document.getElementById("ratings").value = "";
             // document.getElementById("beers").value = "";
         }
     })
 
+    document.getElementById('stat_button').addEventListener('click', function() {
+        table = makeStats(stats);
+        document.getElementById("stat_zone").innerHTML = table;
+        table = show_average();
+        document.getElementById("stat_zone_2").innerHTML = table;
+    })
 });

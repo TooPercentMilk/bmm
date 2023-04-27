@@ -77,6 +77,7 @@
     margin-top: 15px;
     font-size: 40px;
     color: #423474;
+    opacity: 0;
   }
 
 .big {
@@ -105,6 +106,25 @@
     margin-bottom: 15px;
     height: 25px;
     bottom: 5px;
+}
+
+#stat_button {
+    font-family: Mukta;
+    font-size: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 170px;
+    background-color: #dfb3fdff;
+    padding: 0;
+    cursor: pointer;
+    border-right: #423474 2px solid;
+    border-bottom: #423474 2px solid;
+    border-top: #796f9b 2px solid;
+    border-left: #796f9b 2px solid;
+}
+
+#stat_zone_2 {
+    margin-top: 20px;
 }
 
 .beerpic {
