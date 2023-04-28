@@ -6,23 +6,26 @@ from surprise import Dataset
 from surprise import Reader
 from surprise import accuracy
 from surprise import SVD
-
+from surprise.model_selection import train_test_split
 
 def load_data():
-    file_path = os.path.expanduser("/Users/brad/Desktop/bmm/bmm/Ratings.csv")
+    file_path = os.path.relpath("Ratings.csv")
     reader = Reader(line_format="user item rating", sep=",")
     data = Dataset.load_from_file(file_path, reader=reader)
 
     return data
 
-
 def accuracy_test(rec, testset):
+    # Calculates Root-Mean-Sqaure Error of predicitons
+    # In form: sqrt(sum( (y - yhat)^2 ) / N)
+
     yhat = rec.test(testset)
 
     return accuracy.rmse(yhat)
 
 
 def train_model(rec, trainset):
+    # Trains recommender model based off of training set
     rec.fit(trainset)
 
     return rec
@@ -45,14 +48,13 @@ def main():
 
     data = load_data()
 
-    trainset = data.build_full_trainset()
+    trainset, testset = train_test_split(data, test_size=0.25)
 
     rec = SVD(n_factors=147) 
     rec = train_model(rec, trainset)
 
     print(predict(rec, "Ryan"))
-
-    #print(accuracy_test(rec, testset))
+    accuracy_test(rec, testset)
     return 0
 
 main()

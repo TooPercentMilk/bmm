@@ -1,4 +1,3 @@
-
 var show_stats = true;
 var current_name = "";
 
@@ -348,4 +347,4 @@ $(document).ready( function() {
         table = show_average();
         document.getElementById("stat_zone_2").innerHTML = table;
     })
-});
+})
